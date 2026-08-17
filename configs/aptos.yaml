@@ -1,0 +1,44 @@
+# APTOS 2019 Configuration
+# 3,662 images | 5 classes | Imbalance Ratio ~8:1
+
+dataset:
+  name: aptos
+  num_classes: 5
+  class_names: [No_DR, Mild, Moderate, Severe, Proliferative_DR]
+  approx_counts: [1268, 266, 793, 193, 295]
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+model:
+  backbone: dinov2_vits14
+  frozen_backbone: true
+  proj_dim: 256
+  proj_hidden: 512
+  num_prototypes: 5
+  cal_hidden: 64
+  cal_init_temp: 1.5
+
+training:
+  epochs: 60          # small dataset → more epochs
+  batch_size: 32
+  lr: 2.0e-4
+  weight_decay: 1.0e-4
+  patience: 15
+  use_weighted_sampler: true
+  scheduler: cosine
+  grad_clip: 1.0
+  seeds: [42, 43, 44, 45, 46]
+
+loss:
+  lambda_focal: 0.5
+  lambda_reliability: 0.4
+  lambda_diversity: 0.1
+  la_tau: 1.0
+  focal_gamma: 2.0
+  num_bins: 10        # fewer bins for small dataset
+
+evaluation:
+  batch_size: 64
+  ece_bins: 10
+  shot_many_thresh: 200
+  shot_few_thresh: 50

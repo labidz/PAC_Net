@@ -1,0 +1,42 @@
+# Retinal OCT Configuration (Kermany 2018)
+# 84,495 images | 4 classes | Imbalance Ratio ~3:1
+
+dataset:
+  name: oct
+  num_classes: 4
+  class_names: [CNV, DME, DRUSEN, NORMAL]
+  approx_counts: [37206, 11349, 8617, 26315]
+
+model:
+  backbone: dinov2_vits14
+  frozen_backbone: true
+  proj_dim: 256
+  proj_hidden: 512
+  num_prototypes: 5
+  cal_hidden: 64
+  cal_init_temp: 1.5
+
+training:
+  epochs: 30
+  batch_size: 128
+  lr: 3.0e-4
+  weight_decay: 1.0e-4
+  patience: 8
+  use_weighted_sampler: true
+  scheduler: cosine
+  grad_clip: 1.0
+  seeds: [42, 43, 44, 45, 46]
+
+loss:
+  lambda_focal: 0.3
+  lambda_reliability: 0.3
+  lambda_diversity: 0.1
+  la_tau: 0.5          # milder adjustment — less severe imbalance
+  focal_gamma: 2.0
+  num_bins: 15
+
+evaluation:
+  batch_size: 256
+  ece_bins: 15
+  shot_many_thresh: 5000
+  shot_few_thresh: 500

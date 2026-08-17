@@ -1,0 +1,45 @@
+# HAM10000 Configuration
+# 10,015 images | 7 classes | Imbalance Ratio 58:1
+
+dataset:
+  name: ham10000
+  num_classes: 7
+  class_names: [akiec, bcc, bkl, df, mel, nv, vasc]
+  # Approximate training counts (70% of 10015)
+  approx_counts: [220, 398, 777, 87, 814, 4433, 94]
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+model:
+  backbone: dinov2_vits14
+  frozen_backbone: true
+  proj_dim: 256
+  proj_hidden: 512
+  num_prototypes: 5
+  cal_hidden: 64
+  cal_init_temp: 1.5
+
+training:
+  epochs: 50
+  batch_size: 64
+  lr: 3.0e-4
+  weight_decay: 1.0e-4
+  patience: 10
+  use_weighted_sampler: true
+  scheduler: cosine
+  grad_clip: 1.0
+  seeds: [42, 43, 44, 45, 46]
+
+loss:
+  lambda_focal: 0.5
+  lambda_reliability: 0.3
+  lambda_diversity: 0.1
+  la_tau: 1.0
+  focal_gamma: 2.0
+  num_bins: 15
+
+evaluation:
+  batch_size: 128
+  ece_bins: 15
+  shot_many_thresh: 100
+  shot_few_thresh: 20

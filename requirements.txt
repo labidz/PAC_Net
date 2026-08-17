@@ -1,0 +1,33 @@
+# PAC-Net dependencies
+# Python >= 3.9 recommended
+
+# Core ML
+torch>=2.1.0
+torchvision>=0.16.0
+timm>=0.9.12
+
+# Data & compute
+numpy>=1.24.0
+pandas>=2.0.0
+Pillow>=10.0.0
+scikit-learn>=1.3.0
+scipy>=1.11.0
+
+# Metrics & analysis
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Optional: FLOPs counting (E11)
+# fvcore>=0.1.5
+
+# Experiment tracking (optional — remove if not needed)
+# wandb>=0.15.0
+
+# Config
+PyYAML>=6.0
+
+# Progress
+tqdm>=4.65.0
+
+# Reproducibility
+# torch deterministic ops are configured in utils/seed.py
